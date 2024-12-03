@@ -147,7 +147,6 @@ function fizzBuzz() {
   const resetDiv = document.createElement('div');
   resetDiv.classList.add('reset-div');
 
-  const outputElements = [];
   for (let i = fromValue; i <= toValue; i++) {
     let output = '';
 
@@ -163,20 +162,23 @@ function fizzBuzz() {
       output = i;
     }
 
+    const outputBox = document.createElement('div');
+    outputBox.classList.add('output-box');
+
     const outputDiv = document.createElement('span');
     outputDiv.classList.add('output-element');
     outputDiv.textContent = output;
-    outputElements.push(outputDiv);
+    outputBox.appendChild(outputDiv);
 
     if (i < toValue) {
       const commaSpan = document.createElement('span');
       commaSpan.classList.add('comma');
       commaSpan.innerHTML = ',';
-      outputElements.push(commaSpan);
+      outputBox.appendChild(commaSpan);
     }
-  }
 
-  outputElements.forEach(element => resultDiv.appendChild(element));
+    resultDiv.appendChild(outputBox);
+  }
 
   const resetButton = document.createElement('button');
   resetButton.textContent = 'reset';

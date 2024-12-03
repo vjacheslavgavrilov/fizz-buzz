@@ -2,6 +2,7 @@
 :root {
   --primary-color: #0A0A0A;
   --secondary-color: #A5A5A5;
+  --error-color: #DA2626;
   --plate-color: #F4F4F4;
   --plate-border: #EFEFEF;
 }
@@ -89,7 +90,7 @@ h1 {
 }
 
 .input.input-error {
-  outline-color: #DA2626;
+  outline-color: var(--error-color);
 }
 
 .input::placeholder {
@@ -145,6 +146,7 @@ h1 {
   outline: 1px solid var(--plate-border);
   border-radius: 4px;
   width: 100%;
+  gap: 8px;
 }
 
 .info-div,
