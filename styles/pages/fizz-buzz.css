@@ -1,7 +1,153 @@
-.input-error {
-  border-color: #DA2626;
+/* Variables */
+:root {
+  --primary-color: #0A0A0A;
+  --secondary-color: #A5A5A5;
+  --plate-color: #F4F4F4;
+  --plate-border: #EFEFEF;
 }
 
-img {
+/* Font */
+@font-face {
+  font-family: 'Fira Code';
+  font-weight: 300 700;
+  src: url('/data/font/FiraCode-VariableFont_wght.ttf') format('truetype');
+}
+
+body {
+  min-height: 50vh;
+  font-family: 'Fira Code', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--primary-color);
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.grid {
+  margin: 200px auto 0;
+  max-width: 650px;
+  width: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 40px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.content-input {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.icon-view {
+  padding: 16px;
+  background-color: var(--plate-color);
+  outline: 1px solid var(--plate-border);
+  border-radius: 24px;
+}
+
+.title-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.text-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.emoji {
   max-width: 40px;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.input {
+  max-width: 200px;
+  background-color: var(--plate-color);
+  outline: 1px solid var(--plate-border);
+  padding: 16px;
+  border-radius: 4px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.input.input-error {
+  outline-color: #DA2626;
+}
+
+.input::placeholder {
+  color: var(--secondary-color);
+}
+
+.input:focus {
+  outline: 1px solid var(--primary-color);
+}
+
+.input-box {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.button {
+  padding: 16px 24px;
+  border: none;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 18px;
+  line-height: 24px;
+  border-radius: 4px;
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.input-content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 8px;
+}
+
+.content-output {
+  display: flex;
+  flex-direction: column;
+  max-width: 650px;
+  align-items: start;
+  margin-top: 32px;
+  gap: 24px;
+  width: 100%;
+}
+
+.result-div {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 16px 16px 32px;
+  background-color: var(--plate-color);
+  outline: 1px solid var(--plate-border);
+  border-radius: 4px;
+  width: 100%;
+}
+
+.info-div,
+.comma {
+  color: var(--secondary-color);
 }

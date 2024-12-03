@@ -1,28 +1,38 @@
 const divContent = document.querySelector('.js-content');
-divContent.innerHTML = `
-  <div>
-    <img src="/data/images/buzz.png">
-  </div>
-  <h1>
-    FizzBuzz
-  </h1>
-  <p>
-    Any number divisible by 3 is replaced by the word Fizz and any number divisible by 5 by the word Buzz.
-  </p>
-  <p>
-    Numbers divisible by both 3 and 5 become FizzBuzz.
-  </p>
-`;
+if (divContent) {
+  divContent.innerHTML = `
+    <div class="icon-view">
+      <img class="emoji">
+    </div>
+    <div class="title-box">
+      <h1>
+        FizzBuzz
+      </h1>
+      <div class="text-box">
+        <p>
+          any number divisible by <span class="bold">3</span> is replaced by the word <span class="bold">Fizz</span> and any number divisible by <span class="bold">5</span> by the word <span class="bold">Buzz</span>.
+        </p>
+        <p>
+          numbers divisible by both <span class="bold">3</span> and <span class="bold">5</span> become <span class="bold">FizzBuzz</span>.
+        </p>
+      </div>
+    </div>
+  `;
+}
 
 const divInputContent = document.querySelector('.js-input');
-divInputContent.innerHTML = `
-  <input class="js-from-input" placeholder="from">
-  <span>
-    —
-  </span>
-  <input class="js-to-input" placeholder="to">
-  <button class="js-result"></button>
-`;
+if (divInputContent) {
+  divInputContent.innerHTML = `
+    <div class="input-box">
+      <input class="input js-from-input" placeholder="from">
+      <span>
+        —
+      </span>
+      <input class="input js-to-input" placeholder="to">
+    </div>
+    <button class="button js-result"></button>
+  `;
+}
 
 const MAX_INTERVAL = 10000;
 const ERROR_MESSAGES = {
@@ -42,7 +52,9 @@ function fizzBuzz() {
   const inputTo = document.querySelector('.js-to-input');
   const divOutputContent = document.querySelector('.js-output');
 
-  divOutputContent.innerHTML = '';
+  if (divOutputContent) {
+    divOutputContent.innerHTML = '';
+  }
 
   const isInputFromEmpty = inputFrom.value.trim() === '';
   const isInputToEmpty = inputTo.value.trim() === '';
@@ -99,7 +111,9 @@ function fizzBuzz() {
 
   if (fromValue === toValue) {
     showError(ERROR_MESSAGES.SAME_NUMBERS);
-    errorInputs.push(inputTo);
+    inputFrom.classList.add('input-error');
+    inputTo.classList.add('input-error');
+    errorInputs.push(inputFrom, inputTo);
     return;
   }
 
@@ -120,7 +134,9 @@ function fizzBuzz() {
   inputTo.classList.remove('input-error');
   errorInputs = [];
 
-  divInputContent.innerHTML = '';
+  if (divInputContent) {
+    divInputContent.innerHTML = '';
+  }
 
   const infoDiv = document.createElement('div');
   infoDiv.classList.add('info-div');
@@ -133,11 +149,11 @@ function fizzBuzz() {
 
   const outputElements = [];
   for (let i = fromValue; i <= toValue; i++) {
-    if (i === 0) continue;
-
     let output = '';
 
-    if (i % 3 === 0 && i % 5 === 0) {
+    if (i === 0) {
+      output = '0';
+    } else if (i % 3 === 0 && i % 5 === 0) {
       output = 'FizzBuzz';
     } else if (i % 3 === 0) {
       output = 'Fizz';
@@ -147,27 +163,32 @@ function fizzBuzz() {
       output = i;
     }
 
-    const outputDiv = document.createElement('div');
+    const outputDiv = document.createElement('span');
+    outputDiv.classList.add('output-element');
     outputDiv.textContent = output;
     outputElements.push(outputDiv);
 
-    const commaDiv = document.createElement('span');
-    commaDiv.textContent = ', ';
-    outputElements.push(commaDiv);
+    if (i < toValue) {
+      const commaSpan = document.createElement('span');
+      commaSpan.classList.add('comma');
+      commaSpan.innerHTML = ',';
+      outputElements.push(commaSpan);
+    }
   }
-
-  outputElements.pop();
 
   outputElements.forEach(element => resultDiv.appendChild(element));
 
   const resetButton = document.createElement('button');
   resetButton.textContent = 'reset';
+  resetButton.classList.add('button');
   resetButton.addEventListener('click', resetPage);
   resetDiv.appendChild(resetButton);
 
-  divOutputContent.appendChild(infoDiv);
-  divOutputContent.appendChild(resultDiv);
-  divOutputContent.appendChild(resetDiv);
+  if (divOutputContent) {
+    divOutputContent.appendChild(infoDiv);
+    divOutputContent.appendChild(resultDiv);
+    divOutputContent.appendChild(resetDiv);
+  }
 }
 
 function showError(message) {
@@ -175,7 +196,7 @@ function showError(message) {
   divErrorContent.classList.add('js-error');
   divErrorContent.textContent = message;
   divErrorContent.style.color = '#DA2626';
-  document.body.appendChild(divErrorContent);
+  document.querySelector('.input-content').appendChild(divErrorContent);
 }
 
 function removeExistingError() {
@@ -232,20 +253,32 @@ function handleInputFocus(event) {
 
 function resetPage() {
   const divInputContent = document.querySelector('.js-input');
-  divInputContent.innerHTML = `
-    <input class="js-from-input" placeholder="from">
-    <input class="js-to-input" placeholder="to">
-    <button class="js-result"></button>
-  `;
+  if (divInputContent) {
+    divInputContent.innerHTML = `
+      <div class="input-box">
+        <input class="input js-from-input" placeholder="from">
+        <span>
+          —
+        </span>
+        <input class="input js-to-input" placeholder="to">
+      </div>
+      <button class="button js-result"></button>
+    `;
+  }
 
   const divOutputContent = document.querySelector('.js-output');
-  divOutputContent.innerHTML = '';
+  if (divOutputContent) {
+    divOutputContent.innerHTML = '';
+  }
 
   const buttonResult = document.querySelector('.js-result');
+  buttonResult.removeEventListener('click', fizzBuzz);
   buttonResult.addEventListener('click', fizzBuzz);
 
   const inputFrom = document.querySelector('.js-from-input');
   const inputTo = document.querySelector('.js-to-input');
+  inputFrom.removeEventListener('focus', handleInputFocus);
+  inputTo.removeEventListener('focus', handleInputFocus);
   inputFrom.addEventListener('focus', handleInputFocus);
   inputTo.addEventListener('focus', handleInputFocus);
 
@@ -253,11 +286,17 @@ function resetPage() {
 }
 
 const buttonResult = document.querySelector('.js-result');
-buttonResult.addEventListener('click', fizzBuzz);
+if (buttonResult) {
+  buttonResult.addEventListener('click', fizzBuzz);
+}
 
 const inputFrom = document.querySelector('.js-from-input');
 const inputTo = document.querySelector('.js-to-input');
-inputFrom.addEventListener('focus', handleInputFocus);
-inputTo.addEventListener('focus', handleInputFocus);
+if (inputFrom) {
+  inputFrom.addEventListener('focus', handleInputFocus);
+}
+if (inputTo) {
+  inputTo.addEventListener('focus', handleInputFocus);
+}
 
 setRandomButtonText();
