@@ -48,6 +48,7 @@ const ERROR_MESSAGES = {
 let errorInputs = [];
 let currentErrorMessage = null;
 let divOutputContent = null;
+let hasError = false;
 
 function createOutputDiv() {
   if (!divOutputContent) {
@@ -215,22 +216,26 @@ function fizzBuzz() {
 
 function showError(message) {
   currentErrorMessage = message;
+  hasError = true;
   repositionErrorMessage();
 }
 
 function repositionErrorMessage() {
   removeExistingError();
 
-  if (currentErrorMessage) {
+  if (hasError && currentErrorMessage) {
     const divErrorContent = document.createElement('div');
     divErrorContent.classList.add('js-error');
     divErrorContent.textContent = currentErrorMessage;
     divErrorContent.style.color = '#DA2626';
 
-    if (window.innerWidth <= 767) {
-      document.querySelector('.input-box').appendChild(divErrorContent);
-    } else {
-      document.querySelector('.input-content').appendChild(divErrorContent);
+    const inputBox = document.querySelector('.input-box');
+    const inputContent = document.querySelector('.input-content');
+
+    if (window.innerWidth <= 767 && inputBox) {
+      inputBox.appendChild(divErrorContent);
+    } else if (inputContent) {
+      inputContent.appendChild(divErrorContent);
     }
   }
 }
@@ -391,7 +396,12 @@ if (inputTo) {
   inputTo.addEventListener('focus', handleInputFocus);
 }
 
-window.addEventListener('resize', repositionErrorMessage);
+window.addEventListener('resize', () => {
+  hasError = false;
+  removeExistingError();
+  removeInputErrors();
+  repositionErrorMessage();
+});
 
 setRandomButtonText();
 
