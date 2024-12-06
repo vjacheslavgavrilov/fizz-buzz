@@ -1,0 +1,51 @@
+@media (max-width: 767px) {
+  h1 {
+    font-size: 24px;
+  }
+
+  body{
+    font-size: 16px;
+  }
+
+  .input-content {
+    width: 100%;
+  }
+
+  .content-input {
+    flex-direction: column;
+    width: inherit;
+    gap: 32px;
+  }
+
+  .content-output {
+    margin: 0 auto 72px;
+  }
+
+  .input-box {
+    flex-direction: column;
+    gap: 16px;
+    width: inherit;
+  }
+
+  .input {
+    font-size: 16px;
+  }
+
+  .dash {
+    display: none;
+  }
+
+  .input {
+    max-width: inherit;
+    width: 100%;
+  }
+
+  .button {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .reset-div {
+    width: 100%;
+  }
+}

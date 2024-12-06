@@ -10,10 +10,10 @@ if (divContent) {
       </h1>
       <div class="text-box">
         <p>
-          any number divisible by <span class="bold">3</span> is replaced by the word <span class="bold">Fizz</span> and any number divisible by <span class="bold">5</span> by the word <span class="bold">Buzz</span>.
+          any number divisible by&nbsp;<span class="bold">3</span>&nbsp;is replaced by&nbsp;the word <span class="bold">Fizz</span> and any number divisible by&nbsp;<span class="bold">5</span>&nbsp;by&nbsp;the word <span class="bold">Buzz</span>.
         </p>
         <p>
-          numbers divisible by both <span class="bold">3</span> and <span class="bold">5</span> become <span class="bold">FizzBuzz</span>.
+          numbers divisible by&nbsp;both <span class="bold">3</span>&nbsp;and <span class="bold">5</span>&nbsp;become <span class="bold">FizzBuzz</span>.
         </p>
       </div>
     </div>
@@ -25,7 +25,7 @@ if (divInputContent) {
   divInputContent.innerHTML = `
     <div class="input-box">
       <input class="input js-from-input" placeholder="from">
-      <span>
+      <span class="dash">
         —
       </span>
       <input class="input js-to-input" placeholder="to">
@@ -46,12 +46,29 @@ const ERROR_MESSAGES = {
 };
 
 let errorInputs = [];
+let currentErrorMessage = null;
+let divOutputContent = null;
+
+function createOutputDiv() {
+  if (!divOutputContent) {
+    divOutputContent = document.createElement('div');
+    divOutputContent.classList.add('content-output', 'js-output');
+    document.querySelector('.grid').appendChild(divOutputContent);
+  }
+}
+
+function removeOutputDiv() {
+  if (divOutputContent) {
+    divOutputContent.remove();
+    divOutputContent = null;
+  }
+}
 
 function fizzBuzz() {
   const inputFrom = document.querySelector('.js-from-input');
   const inputTo = document.querySelector('.js-to-input');
-  const divOutputContent = document.querySelector('.js-output');
 
+  createOutputDiv();
   if (divOutputContent) {
     divOutputContent.innerHTML = '';
   }
@@ -60,6 +77,7 @@ function fizzBuzz() {
   const isInputToEmpty = inputTo.value.trim() === '';
 
   removeExistingError();
+  removeInputErrors();
 
   if (isInputFromEmpty || isInputToEmpty) {
     showError(ERROR_MESSAGES.EMPTY);
@@ -191,14 +209,30 @@ function fizzBuzz() {
     divOutputContent.appendChild(resultDiv);
     divOutputContent.appendChild(resetDiv);
   }
+
+  bindButtonEvents();
 }
 
 function showError(message) {
-  const divErrorContent = document.createElement('div');
-  divErrorContent.classList.add('js-error');
-  divErrorContent.textContent = message;
-  divErrorContent.style.color = '#DA2626';
-  document.querySelector('.input-content').appendChild(divErrorContent);
+  currentErrorMessage = message;
+  repositionErrorMessage();
+}
+
+function repositionErrorMessage() {
+  removeExistingError();
+
+  if (currentErrorMessage) {
+    const divErrorContent = document.createElement('div');
+    divErrorContent.classList.add('js-error');
+    divErrorContent.textContent = currentErrorMessage;
+    divErrorContent.style.color = '#DA2626';
+
+    if (window.innerWidth <= 767) {
+      document.querySelector('.input-box').appendChild(divErrorContent);
+    } else {
+      document.querySelector('.input-content').appendChild(divErrorContent);
+    }
+  }
 }
 
 function removeExistingError() {
@@ -206,6 +240,13 @@ function removeExistingError() {
   if (existingErrorDiv) {
     existingErrorDiv.remove();
   }
+}
+
+function removeInputErrors() {
+  const inputFrom = document.querySelector('.js-from-input');
+  const inputTo = document.querySelector('.js-to-input');
+  inputFrom.classList.remove('input-error');
+  inputTo.classList.remove('input-error');
 }
 
 function highlightEmptyInputs(isInputFromEmpty, isInputToEmpty) {
@@ -259,7 +300,7 @@ function resetPage() {
     divInputContent.innerHTML = `
       <div class="input-box">
         <input class="input js-from-input" placeholder="from">
-        <span>
+        <span class="dash">
           —
         </span>
         <input class="input js-to-input" placeholder="to">
@@ -268,10 +309,7 @@ function resetPage() {
     `;
   }
 
-  const divOutputContent = document.querySelector('.js-output');
-  if (divOutputContent) {
-    divOutputContent.innerHTML = '';
-  }
+  removeOutputDiv();
 
   const buttonResult = document.querySelector('.js-result');
   buttonResult.removeEventListener('click', fizzBuzz);
@@ -285,6 +323,58 @@ function resetPage() {
   inputTo.addEventListener('focus', handleInputFocus);
 
   setRandomButtonText();
+
+  bindButtonEvents();
+}
+
+function bindButtonEvents() {
+  const buttons = document.querySelectorAll('button');
+
+  buttons.forEach((button) => {
+    button.addEventListener('mousedown', (event) => {
+      if (event.button === 0) {
+        button.classList.add('button-active');
+      }
+    });
+
+    button.addEventListener('mouseup', () => {
+      button.classList.remove('button-active');
+    });
+
+    button.addEventListener('mouseleave', () => {
+      button.classList.remove('button-active');
+    });
+
+    button.addEventListener('touchstart', (event) => {
+      button.classList.add('button-active');
+    });
+
+    button.addEventListener('touchend', () => {
+      button.classList.remove('button-active');
+    });
+
+    button.addEventListener('touchcancel', () => {
+      button.classList.remove('button-active');
+    });
+  });
+
+  document.addEventListener('mouseup', () => {
+    buttons.forEach((button) => {
+      button.classList.remove('button-active');
+    });
+  });
+
+  document.addEventListener('touchend', () => {
+    buttons.forEach((button) => {
+      button.classList.remove('button-active');
+    });
+  });
+
+  document.addEventListener('touchcancel', () => {
+    buttons.forEach((button) => {
+      button.classList.remove('button-active');
+    });
+  });
 }
 
 const buttonResult = document.querySelector('.js-result');
@@ -301,4 +391,8 @@ if (inputTo) {
   inputTo.addEventListener('focus', handleInputFocus);
 }
 
+window.addEventListener('resize', repositionErrorMessage);
+
 setRandomButtonText();
+
+bindButtonEvents();
