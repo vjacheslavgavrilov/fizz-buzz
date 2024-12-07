@@ -26,11 +26,11 @@ const divInputContent = document.querySelector('.js-input');
 if (divInputContent) {
   divInputContent.innerHTML = `
     <div class="input-box">
-      <input class="input js-from-input" placeholder="from">
+      <input class="input js-from-input" id="from-input" name="from" placeholder="from">
       <span class="dash">
         —
       </span>
-      <input class="input js-to-input" placeholder="to">
+      <input class="input js-to-input" id="to-input" name="to" placeholder="to">
     </div>
     <button class="button js-result"></button>
   `;
@@ -338,11 +338,11 @@ function resetPage() {
   if (divInputContent) {
     divInputContent.innerHTML = `
       <div class="input-box">
-        <input class="input js-from-input" placeholder="from">
+        <input class="input js-from-input" id="from-input" name="from" placeholder="from">
         <span class="dash">
           —
         </span>
-        <input class="input js-to-input" placeholder="to">
+        <input class="input js-to-input" id="to-input" name="to" placeholder="to">
       </div>
       <button class="button js-result"></button>
     `;
