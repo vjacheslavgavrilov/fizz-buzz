@@ -250,24 +250,40 @@ function removeExistingError() {
 function removeInputErrors() {
   const inputFrom = document.querySelector('.js-from-input');
   const inputTo = document.querySelector('.js-to-input');
-  inputFrom.classList.remove('input-error');
-  inputTo.classList.remove('input-error');
+
+  if (inputFrom) {
+    inputFrom.classList.remove('input-error');
+  }
+
+  if (inputTo) {
+    inputTo.classList.remove('input-error');
+  }
 }
 
 function highlightEmptyInputs(isInputFromEmpty, isInputToEmpty) {
   const inputFrom = document.querySelector('.js-from-input');
   const inputTo = document.querySelector('.js-to-input');
 
-  inputFrom.classList.toggle('input-error', isInputFromEmpty);
-  inputTo.classList.toggle('input-error', isInputToEmpty);
+  if (inputFrom) {
+    inputFrom.classList.toggle('input-error', isInputFromEmpty);
+  }
+
+  if (inputTo) {
+    inputTo.classList.toggle('input-error', isInputToEmpty);
+  }
 }
 
 function highlightInvalidInputs(isInputFromInvalid, isInputToInvalid) {
   const inputFrom = document.querySelector('.js-from-input');
   const inputTo = document.querySelector('.js-to-input');
 
-  inputFrom.classList.toggle('input-error', isInputFromInvalid);
-  inputTo.classList.toggle('input-error', isInputToInvalid);
+  if (inputFrom) {
+    inputFrom.classList.toggle('input-error', isInputFromInvalid);
+  }
+
+  if (inputTo) {
+    inputTo.classList.toggle('input-error', isInputToInvalid);
+  }
 }
 
 function cleanInput(value) {
