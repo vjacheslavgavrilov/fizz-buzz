@@ -1,3 +1,4 @@
+// Select the content div and populate it with initial HTML
 const divContent = document.querySelector('.js-content');
 if (divContent) {
   divContent.innerHTML = `
@@ -20,6 +21,7 @@ if (divContent) {
   `;
 }
 
+// Select the input content div and populate it with input fields and button
 const divInputContent = document.querySelector('.js-input');
 if (divInputContent) {
   divInputContent.innerHTML = `
@@ -34,6 +36,7 @@ if (divInputContent) {
   `;
 }
 
+// Define constants for maximum interval and error messages
 const MAX_INTERVAL = 10000;
 const ERROR_MESSAGES = {
   EMPTY: 'enter a value',
@@ -45,19 +48,22 @@ const ERROR_MESSAGES = {
   INTEGERS_ONLY: 'integers only'
 };
 
+// Initialize variables for error handling and output content
 let errorInputs = [];
 let currentErrorMessage = null;
 let divOutputContent = null;
 let hasError = false;
 
+// Function to create the output div if it doesn't exist
 function createOutputDiv() {
   if (!divOutputContent) {
     divOutputContent = document.createElement('div');
     divOutputContent.classList.add('content-output', 'js-output');
-    document.querySelector('.grid').appendChild(divOutputContent);
+    document.querySelector('.main-container').appendChild(divOutputContent);
   }
 }
 
+// Function to remove the output div if it exists
 function removeOutputDiv() {
   if (divOutputContent) {
     divOutputContent.remove();
@@ -65,6 +71,7 @@ function removeOutputDiv() {
   }
 }
 
+// Main function to handle FizzBuzz logic
 function fizzBuzz() {
   const inputFrom = document.querySelector('.js-from-input');
   const inputTo = document.querySelector('.js-to-input');
@@ -214,12 +221,14 @@ function fizzBuzz() {
   bindButtonEvents();
 }
 
+// Function to show an error message
 function showError(message) {
   currentErrorMessage = message;
   hasError = true;
   repositionErrorMessage();
 }
 
+// Function to reposition the error message based on screen width
 function repositionErrorMessage() {
   removeExistingError();
 
@@ -230,7 +239,7 @@ function repositionErrorMessage() {
     divErrorContent.style.color = '#DA2626';
 
     const inputBox = document.querySelector('.input-box');
-    const inputContent = document.querySelector('.input-content');
+    const inputContent = document.querySelector('.input-area');
 
     if (window.innerWidth <= 767 && inputBox) {
       inputBox.appendChild(divErrorContent);
@@ -240,6 +249,7 @@ function repositionErrorMessage() {
   }
 }
 
+// Function to remove the existing error message
 function removeExistingError() {
   const existingErrorDiv = document.querySelector('.js-error');
   if (existingErrorDiv) {
@@ -247,6 +257,7 @@ function removeExistingError() {
   }
 }
 
+// Function to remove input error classes
 function removeInputErrors() {
   const inputFrom = document.querySelector('.js-from-input');
   const inputTo = document.querySelector('.js-to-input');
@@ -260,6 +271,7 @@ function removeInputErrors() {
   }
 }
 
+// Function to highlight empty input fields
 function highlightEmptyInputs(isInputFromEmpty, isInputToEmpty) {
   const inputFrom = document.querySelector('.js-from-input');
   const inputTo = document.querySelector('.js-to-input');
@@ -273,6 +285,7 @@ function highlightEmptyInputs(isInputFromEmpty, isInputToEmpty) {
   }
 }
 
+// Function to highlight invalid input fields
 function highlightInvalidInputs(isInputFromInvalid, isInputToInvalid) {
   const inputFrom = document.querySelector('.js-from-input');
   const inputTo = document.querySelector('.js-to-input');
@@ -286,10 +299,12 @@ function highlightInvalidInputs(isInputFromInvalid, isInputToInvalid) {
   }
 }
 
+// Function to clean input values by removing spaces
 function cleanInput(value) {
   return value.replace(/[ ]/g, '');
 }
 
+// Function to set a random button text
 function setRandomButtonText() {
   const buttonResult = document.querySelector('.js-result');
   const randomText = Math.random() < 0.5 ? 'fizz it!' : 'buzz it!';
@@ -297,6 +312,7 @@ function setRandomButtonText() {
   updateImageBasedOnButtonText(randomText);
 }
 
+// Function to update the image based on the button text
 function updateImageBasedOnButtonText(buttonText) {
   const imgElement = divContent.querySelector('img');
   if (buttonText.includes('fizz')) {
@@ -306,6 +322,7 @@ function updateImageBasedOnButtonText(buttonText) {
   }
 }
 
+// Function to handle input focus events
 function handleInputFocus(event) {
   const input = event.target;
   if (errorInputs.includes(input)) {
@@ -315,6 +332,7 @@ function handleInputFocus(event) {
   }
 }
 
+// Function to reset the page to its initial state
 function resetPage() {
   const divInputContent = document.querySelector('.js-input');
   if (divInputContent) {
@@ -348,6 +366,7 @@ function resetPage() {
   bindButtonEvents();
 }
 
+// Function to bind button events for active state
 function bindButtonEvents() {
   const buttons = document.querySelectorAll('button');
 
@@ -398,6 +417,7 @@ function bindButtonEvents() {
   });
 }
 
+// Add event listeners to the result button and input fields
 const buttonResult = document.querySelector('.js-result');
 if (buttonResult) {
   buttonResult.addEventListener('click', fizzBuzz);
@@ -412,6 +432,7 @@ if (inputTo) {
   inputTo.addEventListener('focus', handleInputFocus);
 }
 
+// Reposition the error message on window resize
 window.addEventListener('resize', () => {
   hasError = false;
   removeExistingError();
@@ -419,6 +440,8 @@ window.addEventListener('resize', () => {
   repositionErrorMessage();
 });
 
+// Set a random button text on page load
 setRandomButtonText();
 
+// Bind button events on page load
 bindButtonEvents();

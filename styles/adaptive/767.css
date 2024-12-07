@@ -1,17 +1,19 @@
 @media (max-width: 767px) {
+  /* Adjust font sizes for smaller screens */
   h1 {
     font-size: 24px;
   }
 
-  body{
+  body {
     font-size: 16px;
   }
 
-  .input-content {
+  /* Adjust input area for smaller screens */
+  .input-area {
     width: 100%;
   }
 
-  .content-input {
+  .input-content {
     flex-direction: column;
     width: inherit;
     gap: 32px;
@@ -29,15 +31,12 @@
 
   .input {
     font-size: 16px;
+    max-width: inherit;
+    width: 100%;
   }
 
   .dash {
     display: none;
-  }
-
-  .input {
-    max-width: inherit;
-    width: 100%;
   }
 
   .button {
